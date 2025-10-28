@@ -1,0 +1,466 @@
+Windows PowerShell
+版权所有（C） Microsoft Corporation。保留所有权利。
+
+安装最新的 PowerShell，了解新功能和改进！https://aka.ms/PSWindows
+
+. : 无法加载文件 C:\Users\18071\Documents\WindowsPowerShell\profile.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参
+阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。
+所在位置 行:1 字符: 3
++ . 'C:\Users\18071\Documents\WindowsPowerShell\profile.ps1'
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) []，PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+PS C:\WINDOWS\system32> cd C:\Users\18071\Desktop\MMAudio_M
+PS C:\Users\18071\Desktop\MMAudio_M> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+执行策略更改
+执行策略可帮助你防止执行不信任的脚本。更改执行策略可能会产生安全风险，如 https:/go.microsoft.com/fwlink/?LinkID=135170
+中的 about_Execution_Policies 帮助主题所述。是否要更改执行策略?
+[Y] 是(Y)  [A] 全是(A)  [N] 否(N)  [L] 全否(L)  [S] 暂停(S)  [?] 帮助 (默认值为“N”): Y
+PS C:\Users\18071\Desktop\MMAudio_M> python -m venv mmaudio_env
+PS C:\Users\18071\Desktop\MMAudio_M> .\mmaudio_env\Scripts\Activate.ps1
+(mmaudio_env) PS C:\Users\18071\Desktop\MMAudio_M> nvidia-smi
+Tue Oct 28 16:02:09 2025
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 566.24                 Driver Version: 566.24         CUDA Version: 12.7     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4060 ...  WDDM  |   00000000:01:00.0 Off |                  N/A |
+| N/A   46C    P8              1W /   63W |       0MiB /   8188MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A      3232    C+G   D:\Huorong\Sysdiag\bin\HipsDaemon.exe       N/A      |
++-----------------------------------------------------------------------------------------+
+(mmaudio_env) PS C:\Users\18071\Desktop\MMAudio_M> pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 --upgrade
+Looking in indexes: https://download.pytorch.org/whl/cu118, https://pypi.ngc.nvidia.com
+Collecting torch
+  Downloading https://download.pytorch.org/whl/cu118/torch-2.7.1%2Bcu118-cp313-cp313-win_amd64.whl.metadata (27 kB)
+Collecting torchvision
+  Downloading https://download.pytorch.org/whl/cu118/torchvision-0.22.1%2Bcu118-cp313-cp313-win_amd64.whl.metadata (6.3 kB)
+Collecting torchaudio
+  Downloading https://download.pytorch.org/whl/cu118/torchaudio-2.7.1%2Bcu118-cp313-cp313-win_amd64.whl.metadata (6.8 kB)
+Collecting filelock (from torch)
+  Downloading https://download.pytorch.org/whl/filelock-3.19.1-py3-none-any.whl.metadata (2.1 kB)
+Collecting typing-extensions>=4.10.0 (from torch)
+  Downloading https://download.pytorch.org/whl/typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting sympy>=1.13.3 (from torch)
+  Downloading https://download.pytorch.org/whl/sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx (from torch)
+  Downloading https://download.pytorch.org/whl/networkx-3.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting jinja2 (from torch)
+  Downloading https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec (from torch)
+  Downloading https://download.pytorch.org/whl/fsspec-2025.9.0-py3-none-any.whl.metadata (10 kB)
+Collecting setuptools (from torch)
+  Downloading https://download.pytorch.org/whl/setuptools-70.2.0-py3-none-any.whl.metadata (5.8 kB)
+Collecting numpy (from torchvision)
+  Downloading https://download.pytorch.org/whl/numpy-2.3.3-cp313-cp313-win_amd64.whl.metadata (60 kB)
+Collecting pillow!=8.3.*,>=5.3.0 (from torchvision)
+  Downloading https://download.pytorch.org/whl/pillow-11.3.0-cp313-cp313-win_amd64.whl.metadata (9.2 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch)
+  Downloading https://download.pytorch.org/whl/mpmath-1.3.0-py3-none-any.whl (536 kB)
+     ---------------------------------------- 536.2/536.2 kB 2.6 MB/s eta 0:00:00
+Collecting MarkupSafe>=2.0 (from jinja2->torch)
+  Downloading https://download.pytorch.org/whl/MarkupSafe-2.1.5.tar.gz (19 kB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... done
+Downloading https://download.pytorch.org/whl/cu118/torch-2.7.1%2Bcu118-cp313-cp313-win_amd64.whl (2817.2 MB)
+   ---------------------------------------- 2.8/2.8 GB 8.3 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/cu118/torchvision-0.22.1%2Bcu118-cp313-cp313-win_amd64.whl (5.5 MB)
+   ---------------------------------------- 5.5/5.5 MB 8.3 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/cu118/torchaudio-2.7.1%2Bcu118-cp313-cp313-win_amd64.whl (4.1 MB)
+   ---------------------------------------- 4.1/4.1 MB 8.4 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/pillow-11.3.0-cp313-cp313-win_amd64.whl (7.0 MB)
+   ---------------------------------------- 7.0/7.0 MB 8.5 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ---------------------------------------- 6.3/6.3 MB 4.9 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Downloading https://download.pytorch.org/whl/filelock-3.19.1-py3-none-any.whl (15 kB)
+Downloading https://download.pytorch.org/whl/fsspec-2025.9.0-py3-none-any.whl (199 kB)
+Downloading https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading https://download.pytorch.org/whl/networkx-3.5-py3-none-any.whl (2.0 MB)
+   ---------------------------------------- 2.0/2.0 MB 9.0 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/numpy-2.3.3-cp313-cp313-win_amd64.whl (12.8 MB)
+   ---------------------------------------- 12.8/12.8 MB 8.4 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/setuptools-70.2.0-py3-none-any.whl (930 kB)
+   ---------------------------------------- 930.8/930.8 kB 10.5 MB/s eta 0:00:00
+Building wheels for collected packages: MarkupSafe
+  Building wheel for MarkupSafe (pyproject.toml) ... done
+  Created wheel for MarkupSafe: filename=MarkupSafe-2.1.5-cp313-cp313-win_amd64.whl size=17214 sha256=45e494a11520192229b4d29b8a42f226b3c1e598cf4852a8010de99dd619bdbb
+  Stored in directory: C:\Users\18071\AppData\Local\Temp\pip-ephem-wheel-cache-t112g6yw\wheels\84\b6\28\95b8e298901ee19b488797095efb5fbed28637ed83215b13b1
+Successfully built MarkupSafe
+Installing collected packages: mpmath, typing-extensions, sympy, setuptools, pillow, numpy, networkx, MarkupSafe, fsspec, filelock, jinja2, torch, torchvision, torchaudio
+Successfully installed MarkupSafe-2.1.5 filelock-3.19.1 fsspec-2025.9.0 jinja2-3.1.6 mpmath-1.3.0 networkx-3.5 numpy-2.3.3 pillow-11.3.0 setuptools-70.2.0 sympy-1.14.0 torch-2.7.1+cu118 torchaudio-2.7.1+cu118 torchvision-0.22.1+cu118 typing-extensions-4.15.0
+(mmaudio_env) PS C:\Users\18071\Desktop\MMAudio_M> pip install --upgrade pip
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple, https://pypi.ngc.nvidia.com
+Requirement already satisfied: pip in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (25.1.1)
+Collecting pip
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/44/3c/d717024885424591d5376220b5e836c2d5293ce2011523c9de23ff7bf068/pip-25.3-py3-none-any.whl (1.8 MB)
+     ---------------------------------------- 1.8/1.8 MB 6.2 MB/s eta 0:00:00
+
+[notice] A new release of pip is available: 25.1.1 -> 25.3
+[notice] To update, run: python.exe -m pip install --upgrade pip
+ERROR: To modify pip, please run the following command:
+C:\Users\18071\Desktop\MMAudio_M\mmaudio_env\Scripts\python.exe -m pip install --upgrade pip
+(mmaudio_env) PS C:\Users\18071\Desktop\MMAudio_M> python.exe -m pip install --upgrade pip
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple, https://pypi.ngc.nvidia.com
+Requirement already satisfied: pip in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (25.1.1)
+Collecting pip
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/44/3c/d717024885424591d5376220b5e836c2d5293ce2011523c9de23ff7bf068/pip-25.3-py3-none-any.whl (1.8 MB)
+     ---------------------------------------- 1.8/1.8 MB 7.4 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 25.1.1
+    Uninstalling pip-25.1.1:
+      Successfully uninstalled pip-25.1.1
+Successfully installed pip-25.3
+(mmaudio_env) PS C:\Users\18071\Desktop\MMAudio_M> python.exe -m pip install -e .
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple, https://pypi.ngc.nvidia.com
+Obtaining file:///C:/Users/18071/Desktop/MMAudio_M
+  Installing build dependencies ... done
+  Checking if build backend supports build_editable ... done
+  Getting requirements to build editable ... done
+  Installing backend dependencies ... done
+  Preparing editable metadata (pyproject.toml) ... done
+Collecting av>=14.0.1 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/1e/b5/c114292cb58a7269405ae13b7ba48c7d7bfeebbb2e4e66c8073c065a4430/av-16.0.1-cp313-cp313-win_amd64.whl (32.3 MB)
+     ---------------------------------------- 32.3/32.3 MB 11.2 MB/s  0:00:02
+Collecting colorlog (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/6d/c1/e419ef3723a074172b68aaa89c9f3de486ed4c2399e2dbd8113a4fdcaf9e/colorlog-6.10.1-py3-none-any.whl (11 kB)
+Collecting cython (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/2e/07/23aa4577513a5e918c0deaf8a2ab8a9a5e6703e3fe554e3bc2c3bda1ef58/cython-3.1.6-cp313-cp313-win_amd64.whl (2.7 MB)
+     ---------------------------------------- 2.7/2.7 MB 12.3 MB/s  0:00:00
+Collecting einops>=0.6 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/87/62/9773de14fe6c45c23649e98b83231fffd7b9892b6cf863251dc2afa73643/einops-0.8.1-py3-none-any.whl (64 kB)
+Collecting gitpython>=3.1 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/01/61/d4b89fec821f72385526e1b9d9a3a0385dda4a72b206d28049e2c7cd39b8/gitpython-3.1.45-py3-none-any.whl (208 kB)
+Collecting gradio>=3.34 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/8d/95/1c25fbcabfa201ab79b016c8716a4ac0f846121d4bbfd2136ffb6d87f31e/gradio-5.49.1-py3-none-any.whl (63.5 MB)
+     ---------------------------------------- 63.5/63.5 MB 10.8 MB/s  0:00:05
+Collecting huggingface-hub>=0.26 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/6e/5a/221bb56bff551f5f5652c2a0bcb56ad347b8e1f13e95709b3bb9b8a6e545/huggingface_hub-1.0.0-py3-none-any.whl (503 kB)
+Collecting hydra-colorlog (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/40/50/a08b0453c18088da369991d015ef3902a9ab532b515a41f1bfbe1394854d/hydra_colorlog-1.2.0-py3-none-any.whl (3.6 kB)
+Collecting hydra-core>=1.3.2 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c6/50/e0edd38dcd63fb26a8547f13d28f7a008bc4a3fd4eb4ff030673f22ad41a/hydra_core-1.3.2-py3-none-any.whl (154 kB)
+Collecting librosa>=0.8.1 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/b5/ba/c63c5786dfee4c3417094c4b00966e61e4a63efecee22cb7b4c0387dda83/librosa-0.11.0-py3-none-any.whl (260 kB)
+Collecting nitrous-ema (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/dd/9c/ae7670eee17bc0841c66288eb04248519cff0d9984483db0747dd8d00d6b/nitrous_ema-0.0.1-py3-none-any.whl (6.7 kB)
+Collecting numpy<2.1,>=1.21 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a9/75/10dd1f8116a8b796cb2c737b674e02d02e80454bda953fa7e65d8c12b016/numpy-2.0.2.tar.gz (18.9 MB)
+     ---------------------------------------- 18.9/18.9 MB 9.7 MB/s  0:00:01
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Installing backend dependencies ... done
+  Preparing metadata (pyproject.toml) ... done
+Collecting open-clip-torch>=2.29.0 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/94/91/397327cc1597fa317942cc15bef414175eee4b3c2263b34407c57f3521f9/open_clip_torch-3.2.0-py3-none-any.whl (1.5 MB)
+     ---------------------------------------- 1.5/1.5 MB 4.2 MB/s  0:00:00
+Collecting opencv-python>=4.8 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/fa/80/eb88edc2e2b11cd2dd2e56f1c80b5784d11d6e6b7f04a1145df64df40065/opencv_python-4.12.0.88-cp37-abi3-win_amd64.whl (39.0 MB)
+     ---------------------------------------- 39.0/39.0 MB 9.4 MB/s  0:00:04
+Requirement already satisfied: pillow>=9.5 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from mmaudio==1.0.0) (11.3.0)
+Collecting python-dotenv (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/14/1b/a298b06749107c305e1fe0f814c6c74aea7b2f1e10989cb30f544a1b3253/python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+Collecting requests (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/1e/db/4254e3eabe8020b458f1a747140d32277ec7a271daf1d235b70dc0b4e6e3/requests-2.32.5-py3-none-any.whl (64 kB)
+Collecting scipy>=1.7 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a1/57/0f38e396ad19e41b4c5db66130167eef8ee620a49bc7d0512e3bb67e0cab/scipy-1.16.2-cp313-cp313-win_amd64.whl (38.5 MB)
+     ---------------------------------------- 38.5/38.5 MB 11.3 MB/s  0:00:03
+Collecting tensorboard>=2.11 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/9c/d9/a5db55f88f258ac669a92858b70a714bbbd5acd993820b41ec4a96a4d77f/tensorboard-2.20.0-py3-none-any.whl (5.5 MB)
+     ---------------------------------------- 5.5/5.5 MB 11.6 MB/s  0:00:00
+Collecting tensordict>=0.6.1 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/44/f3/c108125d0c5bfd9ca17904b90f4f9c1a6cbcf831389e24e2bb5ac2f90019/tensordict-0.10.0-cp313-cp313-win_amd64.whl (494 kB)
+Collecting timm>=1.0.12 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/8b/8c/a668e732032f6de4ecc6b33f7ed27eab1c238dce35f6fe39986ad61aed9e/timm-1.0.21-py3-none-any.whl (2.5 MB)
+     ---------------------------------------- 2.5/2.5 MB 11.3 MB/s  0:00:00
+Requirement already satisfied: torch>=2.5.1 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from mmaudio==1.0.0) (2.7.1+cu118)
+Collecting torchdiffeq>=0.2.5 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/b9/35/537f64f2d0b3cfebaae0f903b4e3a3b239abcc99d0f73cb15b9cee9b8212/torchdiffeq-0.2.5-py3-none-any.whl (32 kB)
+Collecting tqdm>=4.66.1 (from mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/d0/30/dc54f88dd4a2b5dc8a0279bdd7270e735851848b762aeb1c1184ed1f6b14/tqdm-4.67.1-py3-none-any.whl (78 kB)
+Collecting gitdb<5,>=4.0.1 (from gitpython>=3.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a0/61/5c78b91c3143ed5c14207f463aecfc8f9dbb5092fb2869baf37c273b2705/gitdb-4.0.12-py3-none-any.whl (62 kB)
+Collecting smmap<6,>=3.0.1 (from gitdb<5,>=4.0.1->gitpython>=3.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/04/be/d09147ad1ec7934636ad912901c5fd7667e1c858e19d355237db0d0cd5e4/smmap-5.0.2-py3-none-any.whl (24 kB)
+Collecting aiofiles<25.0,>=22.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a5/45/30bb92d442636f570cb5651bc661f52b610e2eec3f891a5dc3a4c3667db0/aiofiles-24.1.0-py3-none-any.whl (15 kB)
+Collecting anyio<5.0,>=3.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/15/b3/9b1a8074496371342ec1e796a96f99c82c945a339cd81a8e73de28b4cf9e/anyio-4.11.0-py3-none-any.whl (109 kB)
+Collecting audioop-lts<1.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/34/a5/9d78fdb5b844a83da8a71226c7bdae7cc638861085fff7a1d707cb4823fa/audioop_lts-0.2.2-cp313-abi3-win_amd64.whl (30 kB)
+Collecting brotli>=1.1.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7e/c1/ec214e9c94000d1c1974ec67ced1c970c148aa6b8d8373066123fc3dbf06/Brotli-1.1.0-cp313-cp313-win_amd64.whl (358 kB)
+Collecting fastapi<1.0,>=0.115.2 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7e/bb/1a74dbe87e9a595bf63052c886dfef965dc5b91d149456a8301eb3d41ce2/fastapi-0.120.1-py3-none-any.whl (108 kB)
+Collecting ffmpy (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/36/f3/3e1cbf8cc0d2642de1a34fa6ff5a6dfbd0df4d90a52409f7b3a9e18480b4/ffmpy-0.6.4-py3-none-any.whl (5.6 kB)
+Collecting gradio-client==1.13.3 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/6e/0b/337b74504681b5dde39f20d803bb09757f9973ecdc65fd4e819d4b11faf7/gradio_client-1.13.3-py3-none-any.whl (325 kB)
+Collecting groovy~=0.1 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/28/27/3d6dcadc8a3214d8522c1e7f6a19554e33659be44546d44a2f7572ac7d2a/groovy-0.1.2-py3-none-any.whl (14 kB)
+Collecting httpx<1.0,>=0.24.1 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl (73 kB)
+Requirement already satisfied: jinja2<4.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from gradio>=3.34->mmaudio==1.0.0) (3.1.6)
+Requirement already satisfied: markupsafe<4.0,>=2.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from gradio>=3.34->mmaudio==1.0.0) (2.1.5)
+Collecting orjson~=3.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c0/a9/967be009ddf0a1fffd7a67de9c36656b28c763659ef91352acc02cbe364c/orjson-3.11.4-cp313-cp313-win_amd64.whl (131 kB)
+Collecting packaging (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl (66 kB)
+Collecting pandas<3.0,>=1.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/4f/c7/e54682c96a895d0c808453269e0b5928a07a127a15704fedb643e9b0a4c8/pandas-2.3.3-cp313-cp313-win_amd64.whl (11.0 MB)
+     ---------------------------------------- 11.0/11.0 MB 11.3 MB/s  0:00:00
+Collecting pydantic<2.12,>=2.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/bd/1f/73c53fcbfb0b5a78f91176df41945ca466e71e9d9d836e5c522abda39ee7/pydantic-2.11.10-py3-none-any.whl (444 kB)
+Collecting pydub (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a6/53/d78dc063216e62fc55f6b2eebb447f6a4b0a59f55c8406376f76bf959b08/pydub-0.25.1-py2.py3-none-any.whl (32 kB)
+Collecting python-multipart>=0.0.18 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/45/58/38b5afbc1a800eeea951b9285d3912613f2603bdf897a4ab0f4bd7f405fc/python_multipart-0.0.20-py3-none-any.whl (24 kB)
+Collecting pyyaml<7.0,>=5.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/97/c9/39d5b874e8b28845e4ec2202b5da735d0199dbe5b8fb85f91398814a9a46/pyyaml-6.0.3-cp313-cp313-win_amd64.whl (154 kB)
+Collecting ruff>=0.9.3 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/71/30/3758bcf9e0b6a4193a6f51abf84254aba00887dfa8c20aba18aa366c5f57/ruff-0.14.2-py3-none-win_amd64.whl (13.6 MB)
+     ---------------------------------------- 13.6/13.6 MB 11.7 MB/s  0:00:01
+Collecting safehttpx<0.2.0,>=0.1.6 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/2e/a3/0f0b7d78e2f1eb9e8e1afbff1d2bff8d60144aee17aca51c065b516743dd/safehttpx-0.1.7-py3-none-any.whl (9.0 kB)
+Collecting semantic-version~=2.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/6a/23/8146aad7d88f4fcb3a6218f41a60f6c2d4e3a72de72da1825dc7c8f7877c/semantic_version-2.10.0-py2.py3-none-any.whl (15 kB)
+Collecting starlette<1.0,>=0.40.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/98/c4/da4392a59f3f1c9da2fa7bafd697ed14cf5f2ee2102c5cd4a4a1c5985e42/starlette-0.49.0-py3-none-any.whl (74 kB)
+Collecting tomlkit<0.14.0,>=0.12.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/bd/75/8539d011f6be8e29f339c42e633aae3cb73bffa95dd0f9adec09b9c58e85/tomlkit-0.13.3-py3-none-any.whl (38 kB)
+Collecting typer<1.0,>=0.12 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/78/64/7713ffe4b5983314e9d436a90d5bd4f63b6054e2aca783a3cfc44cb95bbf/typer-0.20.0-py3-none-any.whl (47 kB)
+Requirement already satisfied: typing-extensions~=4.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from gradio>=3.34->mmaudio==1.0.0) (4.15.0)
+Collecting uvicorn>=0.14.0 (from gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/ee/d9/d88e73ca598f4f6ff671fb5fde8a32925c2e08a637303a1d12883c7305fa/uvicorn-0.38.0-py3-none-any.whl (68 kB)
+Requirement already satisfied: fsspec in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from gradio-client==1.13.3->gradio>=3.34->mmaudio==1.0.0) (2025.9.0)
+Collecting websockets<16.0,>=13.0 (from gradio-client==1.13.3->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/1b/6c/c65773d6cab416a64d191d6ee8a8b1c68a09970ea6909d16965d26bfed1e/websockets-15.0.1-cp313-cp313-win_amd64.whl (176 kB)
+Collecting idna>=2.8 (from anyio<5.0,>=3.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/0e/61/66938bbb5fc52dbdf84594873d5b51fb1f7c7794e9c0f5bd885f30bc507b/idna-3.11-py3-none-any.whl (71 kB)
+Collecting sniffio>=1.1 (from anyio<5.0,>=3.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/e9/44/75a9c9421471a6c4805dbf2356f7c181a29c1879239abab1ea2cc8f38b40/sniffio-1.3.1-py3-none-any.whl (10 kB)
+Collecting annotated-doc>=0.0.2 (from fastapi<1.0,>=0.115.2->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/02/b7/cf592cb5de5cb3bade3357f8d2cf42bf103bbe39f459824b4939fd212911/annotated_doc-0.0.3-py3-none-any.whl (5.5 kB)
+Collecting certifi (from httpx<1.0,>=0.24.1->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/e4/37/af0d2ef3967ac0d6113837b44a4f0bfe1328c2b9763bd5b1744520e5cfed/certifi-2025.10.5-py3-none-any.whl (163 kB)
+Collecting httpcore==1.* (from httpx<1.0,>=0.24.1->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl (78 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0,>=0.24.1->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl (37 kB)
+Requirement already satisfied: filelock in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface-hub>=0.26->mmaudio==1.0.0) (3.19.1)
+Collecting shellingham (from huggingface-hub>=0.26->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+Collecting typer-slim (from huggingface-hub>=0.26->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/5e/dd/5cbf31f402f1cc0ab087c94d4669cfa55bd1e818688b910631e131d74e75/typer_slim-0.20.0-py3-none-any.whl (47 kB)
+Collecting hf-xet<2.0.0,>=1.2.0 (from huggingface-hub>=0.26->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/cb/44/870d44b30e1dcfb6a65932e3e1506c103a8a5aea9103c337e7a53180322c/hf_xet-1.2.0-cp37-abi3-win_amd64.whl (2.9 MB)
+     ---------------------------------------- 2.9/2.9 MB 785.5 kB/s  0:00:03
+Collecting python-dateutil>=2.8.2 (from pandas<3.0,>=1.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Collecting pytz>=2020.1 (from pandas<3.0,>=1.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/81/c4/34e93fe5f5429d7570ec1fa436f1986fb1f00c3e0f43a589fe2bbcd22c3f/pytz-2025.2-py2.py3-none-any.whl (509 kB)
+Collecting tzdata>=2022.7 (from pandas<3.0,>=1.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/5c/23/c7abc0ca0a1526a0774eca151daeb8de62ec457e77262b66b359c3c7679e/tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<2.12,>=2.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/78/b6/6307fbef88d9b5ee7421e68d78a9f162e0da4900bc5f5793f6d3d0e34fb8/annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Collecting pydantic-core==2.33.2 (from pydantic<2.12,>=2.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a0/75/4a0a9bac998d78d889def5e4ef2b065acba8cae8c93696906c3a91f310ca/pydantic_core-2.33.2-cp313-cp313-win_amd64.whl (2.0 MB)
+     ---------------------------------------- 2.0/2.0 MB 3.5 MB/s  0:00:00
+Collecting typing-inspection>=0.4.0 (from pydantic<2.12,>=2.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/dc/9b/47798a6c91d8bdb567fe2698fe81e0c6b7cb7ef4d13da4114b41d239f65d/typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Collecting click>=8.0.0 (from typer<1.0,>=0.12->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/db/d3/9dcc0f5797f070ec8edf30fbadfb200e71d9db6b84d211e3b2085a7589a0/click-8.3.0-py3-none-any.whl (107 kB)
+Collecting rich>=10.11.0 (from typer<1.0,>=0.12->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/25/7a/b0178788f8dc6cafce37a212c99565fa1fe7872c70c6c9c1e1a372d9d88f/rich-14.2.0-py3-none-any.whl (243 kB)
+Collecting colorama (from click>=8.0.0->typer<1.0,>=0.12->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Collecting omegaconf<2.4,>=2.2 (from hydra-core>=1.3.2->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/e3/94/1843518e420fa3ed6919835845df698c7e27e183cb997394e4a670973a65/omegaconf-2.3.0-py3-none-any.whl (79 kB)
+Collecting antlr4-python3-runtime==4.9.* (from hydra-core>=1.3.2->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz (117 kB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... done
+Collecting audioread>=2.1.9 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7e/16/fbe8e1e185a45042f7cd3a282def5bb8d95bb69ab9e9ef6a5368aa17e426/audioread-3.1.0-py3-none-any.whl (23 kB)
+Collecting numba>=0.51.0 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/9c/ec/9d414e7a80d6d1dc4af0e07c6bfe293ce0b04ea4d0ed6c45dad9bd6e72eb/numba-0.62.1-cp313-cp313-win_amd64.whl (2.7 MB)
+     ---------------------------------------- 2.7/2.7 MB 3.8 MB/s  0:00:00
+Collecting scikit-learn>=1.1.0 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a7/c7/03000262759d7b6f38c836ff9d512f438a70d8a8ddae68ee80de72dcfb63/scikit_learn-1.7.2-cp313-cp313-win_amd64.whl (8.7 MB)
+     ---------------------------------------- 8.7/8.7 MB 5.4 MB/s  0:00:01
+Collecting joblib>=1.0 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/1e/e8/685f47e0d754320684db4425a0967f7d3fa70126bffd76110b7009a0090f/joblib-1.5.2-py3-none-any.whl (308 kB)
+Collecting decorator>=4.3.0 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/4e/8c/f3147f5c4b73e7550fe5f9352eaa956ae838d5c51eb58e7a25b9f3e2643b/decorator-5.2.1-py3-none-any.whl (9.2 kB)
+Collecting soundfile>=0.12.1 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/14/e9/6b761de83277f2f02ded7e7ea6f07828ec78e4b229b80e4ca55dd205b9dc/soundfile-0.13.1-py2.py3-none-win_amd64.whl (1.0 MB)
+     ---------------------------------------- 1.0/1.0 MB 6.3 MB/s  0:00:00
+Collecting pooch>=1.1 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a8/87/77cc11c7a9ea9fd05503def69e3d18605852cd0d4b0d3b8f15bbeb3ef1d1/pooch-1.8.2-py3-none-any.whl (64 kB)
+Collecting soxr>=0.3.2 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/ce/04/530252227f4d0721a5524a936336485dfb429bb206a66baf8e470384f4a2/soxr-1.0.0-cp312-abi3-win_amd64.whl (172 kB)
+Collecting lazy_loader>=0.1 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/83/60/d497a310bde3f01cb805196ac61b7ad6dc5dcf8dce66634dc34364b20b4f/lazy_loader-0.4-py3-none-any.whl (12 kB)
+Collecting msgpack>=1.0 (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/74/07/1ed8277f8653c40ebc65985180b007879f6a836c525b3885dcc6448ae6cb/msgpack-1.1.2-cp313-cp313-win_amd64.whl (72 kB)
+Collecting standard-aifc (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c3/52/5fbb203394cc852334d1575cc020f6bcec768d2265355984dfd361968f36/standard_aifc-3.13.0-py3-none-any.whl (10 kB)
+Collecting standard-sunau (from librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/34/ae/e3707f6c1bc6f7aa0df600ba8075bfb8a19252140cd595335be60e25f9ee/standard_sunau-3.13.0-py3-none-any.whl (7.4 kB)
+Collecting llvmlite<0.46,>=0.45.0dev0 (from numba>=0.51.0->librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/09/56/ed35668130e32dbfad2eb37356793b0a95f23494ab5be7d9bf5cb75850ee/llvmlite-0.45.1-cp313-cp313-win_amd64.whl (38.1 MB)
+     ---------------------------------------- 38.1/38.1 MB 9.3 MB/s  0:00:04
+Requirement already satisfied: torchvision in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from open-clip-torch>=2.29.0->mmaudio==1.0.0) (0.22.1+cu118)
+Collecting regex (from open-clip-torch>=2.29.0->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/71/2d/55184ed6be6473187868d2f2e6a0708195fc58270e62a22cbf26028f2570/regex-2025.10.23-cp313-cp313-win_amd64.whl (276 kB)
+Collecting ftfy (from open-clip-torch>=2.29.0->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/ab/6e/81d47999aebc1b155f81eca4477a616a70f238a2549848c38983f3c22a82/ftfy-6.3.1-py3-none-any.whl (44 kB)
+Collecting safetensors (from open-clip-torch>=2.29.0->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/2c/c3/c0be1135726618dc1e28d181b8c442403d8dbb9e273fd791de2d4384bcdd/safetensors-0.6.2-cp38-abi3-win_amd64.whl (320 kB)
+Collecting platformdirs>=2.5.0 (from pooch>=1.1->librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/73/cb/ac7874b3e5d58441674fb70742e6c374b28b0c7cb988d37d991cde47166c/platformdirs-4.5.0-py3-none-any.whl (18 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas<3.0,>=1.0->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl (11 kB)
+Collecting charset_normalizer<4,>=2 (from requests->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c4/26/b9924fa27db384bdcd97ab83b4f0a8058d96ad9626ead570674d5e737d90/charset_normalizer-3.4.4-cp313-cp313-win_amd64.whl (107 kB)
+Collecting urllib3<3,>=1.21.1 (from requests->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a7/c2/fe1e52489ae3122415c51f387e221dd0773709bad6c6cdaa599e8a2c5185/urllib3-2.5.0-py3-none-any.whl (129 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=10.11.0->typer<1.0,>=0.12->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/94/54/e7d793b573f298e1c9013b8c4dade17d481164aa517d1d7148619c2cedbf/markdown_it_py-4.0.0-py3-none-any.whl (87 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=10.11.0->typer<1.0,>=0.12->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl (1.2 MB)
+     ---------------------------------------- 1.2/1.2 MB 12.1 MB/s  0:00:00
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=10.11.0->typer<1.0,>=0.12->gradio>=3.34->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Collecting threadpoolctl>=3.1.0 (from scikit-learn>=1.1.0->librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Collecting cffi>=1.0 (from soundfile>=0.12.1->librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/37/18/6519e1ee6f5a1e579e04b9ddb6f1676c17368a7aba48299c3759bbc3c8b3/cffi-2.0.0-cp313-cp313-win_amd64.whl (183 kB)
+Collecting pycparser (from cffi>=1.0->soundfile>=0.12.1->librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/a0/e3/59cd50310fc9b59512193629e1984c1f95e5c8ae6e5d8c69532ccc65a7fe/pycparser-2.23-py3-none-any.whl (118 kB)
+Collecting absl-py>=0.4 (from tensorboard>=2.11->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/8f/aa/ba0014cc4659328dc818a28827be78e6d97312ab0cb98105a770924dc11e/absl_py-2.3.1-py3-none-any.whl (135 kB)
+Collecting grpcio>=1.48.2 (from tensorboard>=2.11->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/41/80/84087dc56437ced7cdd4b13d7875e7439a52a261e3ab4e06488ba6173b0a/grpcio-1.76.0-cp313-cp313-win_amd64.whl (4.7 MB)
+     ---------------------------------------- 4.7/4.7 MB 10.7 MB/s  0:00:00
+Collecting markdown>=2.6.8 (from tensorboard>=2.11->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/70/ae/44c4a6a4cbb496d93c6257954260fe3a6e91b7bed2240e5dad2a717f5111/markdown-3.9-py3-none-any.whl (107 kB)
+Collecting protobuf!=4.24.0,>=3.19.6 (from tensorboard>=2.11->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7b/c6/7a465f1825872c55e0341ff4a80198743f73b69ce5d43ab18043699d1d81/protobuf-6.33.0-cp310-abi3-win_amd64.whl (436 kB)
+Requirement already satisfied: setuptools>=41.0.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from tensorboard>=2.11->mmaudio==1.0.0) (70.2.0)
+Collecting tensorboard-data-server<0.8.0,>=0.7.0 (from tensorboard>=2.11->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7a/13/e503968fefabd4c6b2650af21e110aa8466fe21432cd7c43a84577a89438/tensorboard_data_server-0.7.2-py3-none-any.whl (2.4 kB)
+Collecting werkzeug>=1.0.1 (from tensorboard>=2.11->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/52/24/ab44c871b0f07f491e5d2ad12c9bd7358e527510618cb1b803a88e986db1/werkzeug-3.1.3-py3-none-any.whl (224 kB)
+Collecting cloudpickle (from tensordict>=0.6.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7e/e8/64c37fadfc2816a7701fa8a6ed8d87327c7d54eacfbfb6edab14a2f2be75/cloudpickle-3.1.1-py3-none-any.whl (20 kB)
+Collecting importlib_metadata (from tensordict>=0.6.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/20/b0/36bd937216ec521246249be3bf9855081de4c5e06a0c9b4219dbeda50373/importlib_metadata-8.7.0-py3-none-any.whl (27 kB)
+Collecting pyvers<0.2.0,>=0.1.0 (from tensordict>=0.6.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7f/39/c5432f541e6ea1d616dfd6ef42ce02792f7eb42dd44f5ed4439dbe17a58b/pyvers-0.1.0-py3-none-any.whl (10 kB)
+Requirement already satisfied: sympy>=1.13.3 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from torch>=2.5.1->mmaudio==1.0.0) (1.14.0)
+Requirement already satisfied: networkx in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from torch>=2.5.1->mmaudio==1.0.0) (3.5)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from sympy>=1.13.3->torch>=2.5.1->mmaudio==1.0.0) (1.3.0)
+Collecting wcwidth (from ftfy->open-clip-torch>=2.29.0->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/af/b5/123f13c975e9f27ab9c0770f514345bd406d0e8d3b7a0723af9d43f710af/wcwidth-0.2.14-py2.py3-none-any.whl (37 kB)
+Collecting zipp>=3.20 (from importlib_metadata->tensordict>=0.6.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/2e/54/647ade08bf0db230bfea292f893923872fd20be6ac6f53b2b936ba839d75/zipp-3.23.0-py3-none-any.whl (10 kB)
+Collecting standard-chunk (from standard-aifc->librosa>=0.8.1->mmaudio==1.0.0)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/7a/90/a5c1084d87767d787a6caba615aa50dc587229646308d9420c960cb5e4c0/standard_chunk-3.13.0-py3-none-any.whl (4.9 kB)
+Building wheels for collected packages: mmaudio, numpy, antlr4-python3-runtime
+  Building editable for mmaudio (pyproject.toml) ... done
+  Created wheel for mmaudio: filename=mmaudio-1.0.0-py3-none-any.whl size=6360 sha256=fdbdc543d2da7433a0feee16cba74e8137979f4d28c5239924dc98d996a0c223
+  Stored in directory: C:\Users\18071\AppData\Local\Temp\pip-ephem-wheel-cache-rn6ngfdt\wheels\cd\4f\ad\d8c327e0ba474ec7575e929336f1930d65051f9fbeed761eee
+  Building wheel for numpy (pyproject.toml) ... done
+  Created wheel for numpy: filename=numpy-2.0.2-cp313-cp313-win_amd64.whl size=6715689 sha256=e8ff58830c322f739bb77564123da96810d9595fffa1a7dd48a9dc68c9639061
+  Stored in directory: C:\Users\18071\AppData\Local\Temp\pip-ephem-wheel-cache-rn6ngfdt\wheels\6f\b9\8c\4e2d0562ee93ab18e78b39cb5033f0c9bd7035af03e5f21c39
+  Building wheel for antlr4-python3-runtime (pyproject.toml) ... done
+  Created wheel for antlr4-python3-runtime: filename=antlr4_python3_runtime-4.9.3-py3-none-any.whl size=144615 sha256=731ad6d061f256d9ab89eba7918d905beed52fa9c7f4af5d0e111952b9bfdc95
+  Stored in directory: C:\Users\18071\AppData\Local\Temp\pip-ephem-wheel-cache-rn6ngfdt\wheels\4e\d0\c3\d7335ae231cece2de32cbf27e0421c4acecdaf21e946a2f507
+Successfully built mmaudio numpy antlr4-python3-runtime
+Installing collected packages: standard-chunk, pytz, pydub, brotli, antlr4-python3-runtime, zipp, werkzeug, websockets, wcwidth, urllib3, tzdata, typing-inspection, tomlkit, threadpoolctl, tensorboard-data-server, sniffio, smmap, six, shellingham, semantic-version, safetensors, ruff, regex, pyyaml, python-multipart, python-dotenv, pygments, pydantic-core, pycparser, protobuf, platformdirs, packaging, orjson, numpy, msgpack, mdurl, markdown, llvmlite, joblib, idna, hf-xet, h11, grpcio, groovy, ffmpy, einops, decorator, cython, colorama, cloudpickle, charset_normalizer, certifi, av, audioop-lts, annotated-types, annotated-doc, aiofiles, absl-py, tqdm, tensorboard, standard-sunau, standard-aifc, soxr, scipy, requests, pyvers, python-dateutil, pydantic, opencv-python, omegaconf, numba, markdown-it-py, lazy_loader, importlib_metadata, httpcore, gitdb, ftfy, colorlog, click, cffi, anyio, uvicorn, typer-slim, torchdiffeq, tensordict, starlette, soundfile, scikit-learn, rich, pooch, pandas, nitrous-ema, hydra-core, httpx, gitpython, audioread, typer, safehttpx, librosa, hydra-colorlog, huggingface-hub, fastapi, timm, gradio-client, open-clip-torch, gradio, mmaudio
+  Attempting uninstall: numpy
+    Found existing installation: numpy 2.3.3
+    Uninstalling numpy-2.3.3:
+      Successfully uninstalled numpy-2.3.3
+Successfully installed absl-py-2.3.1 aiofiles-24.1.0 annotated-doc-0.0.3 annotated-types-0.7.0 antlr4-python3-runtime-4.9.3 anyio-4.11.0 audioop-lts-0.2.2 audioread-3.1.0 av-16.0.1 brotli-1.1.0 certifi-2025.10.5 cffi-2.0.0 charset_normalizer-3.4.4 click-8.3.0 cloudpickle-3.1.1 colorama-0.4.6 colorlog-6.10.1 cython-3.1.6 decorator-5.2.1 einops-0.8.1 fastapi-0.120.1 ffmpy-0.6.4 ftfy-6.3.1 gitdb-4.0.12 gitpython-3.1.45 gradio-5.49.1 gradio-client-1.13.3 groovy-0.1.2 grpcio-1.76.0 h11-0.16.0 hf-xet-1.2.0 httpcore-1.0.9 httpx-0.28.1 huggingface-hub-1.0.0 hydra-colorlog-1.2.0 hydra-core-1.3.2 idna-3.11 importlib_metadata-8.7.0 joblib-1.5.2 lazy_loader-0.4 librosa-0.11.0 llvmlite-0.45.1 markdown-3.9 markdown-it-py-4.0.0 mdurl-0.1.2 mmaudio-1.0.0 msgpack-1.1.2 nitrous-ema-0.0.1 numba-0.62.1 numpy-2.0.2 omegaconf-2.3.0 open-clip-torch-3.2.0 opencv-python-4.12.0.88 orjson-3.11.4 packaging-25.0 pandas-2.3.3 platformdirs-4.5.0 pooch-1.8.2 protobuf-6.33.0 pycparser-2.23 pydantic-2.11.10 pydantic-core-2.33.2 pydub-0.25.1 pygments-2.19.2 python-dateutil-2.9.0.post0 python-dotenv-1.2.1 python-multipart-0.0.20 pytz-2025.2 pyvers-0.1.0 pyyaml-6.0.3 regex-2025.10.23 requests-2.32.5 rich-14.2.0 ruff-0.14.2 safehttpx-0.1.7 safetensors-0.6.2 scikit-learn-1.7.2 scipy-1.16.2 semantic-version-2.10.0 shellingham-1.5.4 six-1.17.0 smmap-5.0.2 sniffio-1.3.1 soundfile-0.13.1 soxr-1.0.0 standard-aifc-3.13.0 standard-chunk-3.13.0 standard-sunau-3.13.0 starlette-0.49.0 tensorboard-2.20.0 tensorboard-data-server-0.7.2 tensordict-0.10.0 threadpoolctl-3.6.0 timm-1.0.21 tomlkit-0.13.3 torchdiffeq-0.2.5 tqdm-4.67.1 typer-0.20.0 typer-slim-0.20.0 typing-inspection-0.4.2 tzdata-2025.2 urllib3-2.5.0 uvicorn-0.38.0 wcwidth-0.2.14 websockets-15.0.1 werkzeug-3.1.3 zipp-3.23.0
+
+(mmaudio_env) PS C:\Users\18071\Desktop\MMAudio_M> pip install --upgrade huggingface_hub
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple, https://pypi.ngc.nvidia.com
+Requirement already satisfied: huggingface_hub in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (1.0.0)
+Requirement already satisfied: filelock in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (3.19.1)
+Requirement already satisfied: fsspec>=2023.5.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (2025.9.0)
+Requirement already satisfied: httpx<1,>=0.23.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (0.28.1)
+Requirement already satisfied: packaging>=20.9 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (25.0)
+Requirement already satisfied: pyyaml>=5.1 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (6.0.3)
+Requirement already satisfied: shellingham in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (1.5.4)
+Requirement already satisfied: tqdm>=4.42.1 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (4.67.1)
+Requirement already satisfied: typer-slim in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (0.20.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (4.15.0)
+Requirement already satisfied: hf-xet<2.0.0,>=1.2.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface_hub) (1.2.0)
+Requirement already satisfied: anyio in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from httpx<1,>=0.23.0->huggingface_hub) (4.11.0)
+Requirement already satisfied: certifi in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from httpx<1,>=0.23.0->huggingface_hub) (2025.10.5)
+Requirement already satisfied: httpcore==1.* in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from httpx<1,>=0.23.0->huggingface_hub) (1.0.9)
+Requirement already satisfied: idna in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from httpx<1,>=0.23.0->huggingface_hub) (3.11)
+Requirement already satisfied: h11>=0.16 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from httpcore==1.*->httpx<1,>=0.23.0->huggingface_hub) (0.16.0)
+Requirement already satisfied: colorama in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from tqdm>=4.42.1->huggingface_hub) (0.4.6)
+Requirement already satisfied: sniffio>=1.1 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from anyio->httpx<1,>=0.23.0->huggingface_hub) (1.3.1)
+Requirement already satisfied: click>=8.0.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from typer-slim->huggingface_hub) (8.3.0)
+(mmaudio_env) PS C:\Users\18071\Desktop\MMAudio_M> pip install --upgrade transformers
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple, https://pypi.ngc.nvidia.com
+Collecting transformers
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/71/d3/c16c3b3cf7655a67db1144da94b021c200ac1303f82428f2beef6c2e72bb/transformers-4.57.1-py3-none-any.whl (12.0 MB)
+     ---------------------------------------- 12.0/12.0 MB 9.4 MB/s  0:00:01
+Requirement already satisfied: filelock in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from transformers) (3.19.1)
+Collecting huggingface-hub<1.0,>=0.34.0 (from transformers)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/cb/bd/1a875e0d592d447cbc02805fd3fe0f497714d6a2583f59d14fa9ebad96eb/huggingface_hub-0.36.0-py3-none-any.whl (566 kB)
+     ---------------------------------------- 566.1/566.1 kB 9.9 MB/s  0:00:00
+Requirement already satisfied: numpy>=1.17 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from transformers) (2.0.2)
+Requirement already satisfied: packaging>=20.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from transformers) (25.0)
+Requirement already satisfied: pyyaml>=5.1 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from transformers) (6.0.3)
+Requirement already satisfied: regex!=2019.12.17 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from transformers) (2025.10.23)
+Requirement already satisfied: requests in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from transformers) (2.32.5)
+Collecting tokenizers<=0.23.0,>=0.22.0 (from transformers)
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/b3/46/e33a8c93907b631a99377ef4c5f817ab453d0b34f93529421f42ff559671/tokenizers-0.22.1-cp39-abi3-win_amd64.whl (2.7 MB)
+     ---------------------------------------- 2.7/2.7 MB 10.4 MB/s  0:00:00
+Requirement already satisfied: safetensors>=0.4.3 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from transformers) (0.6.2)
+Requirement already satisfied: tqdm>=4.27 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from transformers) (4.67.1)
+Requirement already satisfied: fsspec>=2023.5.0 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface-hub<1.0,>=0.34.0->transformers) (2025.9.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from huggingface-hub<1.0,>=0.34.0->transformers) (4.15.0)
+Requirement already satisfied: colorama in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from tqdm>=4.27->transformers) (0.4.6)
+Requirement already satisfied: charset_normalizer<4,>=2 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from requests->transformers) (3.4.4)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from requests->transformers) (3.11)
+Requirement already satisfied: urllib3<3,>=1.21.1 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from requests->transformers) (2.5.0)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\18071\desktop\mmaudio_m\mmaudio_env\lib\site-packages (from requests->transformers) (2025.10.5)
+Installing collected packages: huggingface-hub, tokenizers, transformers
+  Attempting uninstall: huggingface-hub
+    Found existing installation: huggingface-hub 1.0.0
+    Uninstalling huggingface-hub-1.0.0:
+      Successfully uninstalled huggingface-hub-1.0.0
+Successfully installed huggingface-hub-0.36.0 tokenizers-0.22.1 transformers-4.57.1
+
+PS C:\Users\18071\Desktop\MMAudio_M> mkdir C:\Users\18071\Desktop\MMAudio_M\weights\DFN5B-CLIP-ViT-H-14-384
+
+
+    目录: C:\Users\18071\Desktop\MMAudio_M\weights
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        2025/10/28     17:11                DFN5B-CLIP-ViT-H-14-384
+
