@@ -39,6 +39,7 @@ def main():
     parser.add_argument('--seed', type=int, help='Random seed', default=42)
     parser.add_argument('--skip_video_composite', action='store_true')
     parser.add_argument('--full_precision', action='store_true')
+    parser.add_argument('--filetag', type=str, help='Input filetag', default='default_filetag')
 
     args = parser.parse_args()
 
@@ -61,6 +62,7 @@ def main():
     cfg_strength: float = args.cfg_strength
     skip_video_composite: bool = args.skip_video_composite
     mask_away_clip: bool = args.mask_away_clip
+    filetag: str = args.filetag
 
     device = 'cpu'
     if torch.cuda.is_available():
@@ -122,15 +124,18 @@ def main():
                       cfg_strength=cfg_strength)
     audio = audios.float().cpu()[0]
     if video_path is not None:
-        save_path = output_dir / f'{video_path.stem}.flac'
+        #save_path = output_dir / f'{video_path.stem}.flac'
+        save_path = output_dir / f'{video_path.stem}_{filetag}.flac'
     else:
         safe_filename = prompt.replace(' ', '_').replace('/', '_').replace('.', '')
-        save_path = output_dir / f'{safe_filename}.flac'
+        #save_path = output_dir / f'{safe_filename}.flac'
+        save_path = output_dir / f'{safe_filename}_{filetag}.flac'
     torchaudio.save(save_path, audio, seq_cfg.sampling_rate)
 
     log.info(f'Audio saved to {save_path}')
     if video_path is not None and not skip_video_composite:
-        video_save_path = output_dir / f'{video_path.stem}.mp4'
+        #video_save_path = output_dir / f'{video_path.stem}.mp4'
+        video_save_path = output_dir / f'{video_path.stem}_{filetag}.mp4'
         make_video(video_info, video_save_path, audio, sampling_rate=seq_cfg.sampling_rate)
         log.info(f'Video saved to {output_dir / video_save_path}')
 
