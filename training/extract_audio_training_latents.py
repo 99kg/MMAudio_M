@@ -79,9 +79,18 @@ def main():
 
     # cuda setup
     torch.cuda.set_device(local_rank)
-    clip_model = create_model_from_pretrained('hf-hub:apple/DFN5B-CLIP-ViT-H-14-384',
-                                              return_transform=False).eval().cuda()
+    # clip_model = create_model_from_pretrained('hf-hub:apple/DFN5B-CLIP-ViT-H-14-384',
+    #                                           return_transform=False).eval().cuda()
+    # 获取当前脚本所在目录
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # 构建相对路径
+    clip_model_path = os.path.join(current_dir, '../local_files/apple/DFN5B-CLIP-ViT-H-14-384')
+    # 替换路径中的反斜杠为正斜杠
+    clip_model_path = clip_model_path.replace('\\', '/')
+    # 使用绝对路径
+    abs_clip_model_path = os.path.abspath(clip_model_path)
 
+    clip_model = create_model_from_pretrained(f'local-dir:{abs_clip_model_path}', return_transform=False).eval().cuda()
     # a hack to make it output last hidden states
     def new_encode_text(self, text, normalize: bool = False):
         cast_dtype = self.transformer.get_cast_dtype()

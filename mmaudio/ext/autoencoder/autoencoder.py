@@ -1,5 +1,6 @@
 from typing import Literal, Optional
 
+import os
 import torch
 import torch.nn as nn
 
@@ -27,8 +28,20 @@ class AutoEncoderModule(nn.Module):
             assert vocoder_ckpt_path is not None
             self.vocoder = BigVGAN(vocoder_ckpt_path).eval()
         elif mode == '44k':
-            self.vocoder = BigVGANv2.from_pretrained('nvidia/bigvgan_v2_44khz_128band_512x',
-                                                     use_cuda_kernel=False)
+            #self.vocoder = BigVGANv2.from_pretrained('nvidia/bigvgan_v2_44khz_128band_512x',
+            #                                         use_cuda_kernel=False)
+            # 当前脚本所在目录
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            # 构建相对路径
+            vocoder_model_path = os.path.join(current_dir, '../../../local_files/nvida/bigvgan_v2_44khz_128band_512x')
+            # 替换路径中的反斜杠为正斜杠
+            vocoder_model_path = vocoder_model_path.replace('\\', '/')
+            # 使用绝对路径
+            abs_vocoder_model_path = os.path.abspath(vocoder_model_path)
+            # 替换路径中的反斜杠为正斜杠
+            abs_vocoder_model_path = abs_vocoder_model_path.replace('\\', '/')
+
+            self.vocoder = BigVGANv2.from_pretrained(f'{abs_vocoder_model_path}', use_cuda_kernel=False, local_files_only=True)
             self.vocoder.remove_weight_norm()
         else:
             raise ValueError(f'Unknown mode: {mode}')

@@ -1,6 +1,7 @@
 from typing import Literal, Optional
 
 import open_clip
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -14,23 +15,28 @@ from mmaudio.ext.synchformer import Synchformer
 from mmaudio.model.utils.distributions import DiagonalGaussianDistribution
 
 
+# 定义一个函数，用于修改 CLIP 模型的 encode_text 方法，使其输出最后的隐藏状态
 def patch_clip(clip_model):
-    # a hack to make it output last hidden states
-    # https://github.com/mlfoundations/open_clip/blob/fc5a37b72d705f760ebbc7915b84729816ed471f/src/open_clip/model.py#L269
+    # 一个 hack 方法，用于让 CLIP 模型输出最后的隐藏状态
+    # 参考链接：https://github.com/mlfoundations/open_clip/blob/fc5a37b72d705f760ebbc7915b84729816ed471f/src/open_clip/model.py#L269
     def new_encode_text(self, text, normalize: bool = False):
         cast_dtype = self.transformer.get_cast_dtype()
 
+        # 获取 token 嵌入
         x = self.token_embedding(text).to(cast_dtype)  # [batch_size, n_ctx, d_model]
 
+        # 添加位置嵌入并通过 transformer
         x = x + self.positional_embedding.to(cast_dtype)
         x = self.transformer(x, attn_mask=self.attn_mask)
         x = self.ln_final(x)  # [batch_size, n_ctx, transformer.width]
         return F.normalize(x, dim=-1) if normalize else x
 
+    # 替换 CLIP 模型的 encode_text 方法
     clip_model.encode_text = new_encode_text.__get__(clip_model)
     return clip_model
 
 
+# 定义一个工具类，用于处理特征提取和编码
 class FeaturesUtils(nn.Module):
 
     def __init__(
@@ -46,23 +52,38 @@ class FeaturesUtils(nn.Module):
         super().__init__()
 
         if enable_conditions:
-            self.clip_model = create_model_from_pretrained('hf-hub:apple/DFN5B-CLIP-ViT-H-14-384',
-                                                           return_transform=False)
+            # self.clip_model = create_model_from_pretrained('hf-hub:apple/DFN5B-CLIP-ViT-H-14-384',
+            #                                                return_transform=False)
+            # 当前脚本所在目录
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            # 构建相对路径
+            clip_model_path = os.path.join(current_dir, '../../../local_files/apple/DFN5B-CLIP-ViT-H-14-384')
+            # 替换路径中的反斜杠为正斜杠
+            clip_model_path = clip_model_path.replace('\\', '/')
+            # 使用绝对路径
+            abs_clip_model_path = os.path.abspath(clip_model_path)
+            self.clip_model = create_model_from_pretrained(f'local-dir:{abs_clip_model_path}', return_transform=False)
+
+            # 设置 CLIP 模型的预处理参数
             self.clip_preprocess = Normalize(mean=[0.48145466, 0.4578275, 0.40821073],
                                              std=[0.26862954, 0.26130258, 0.27577711])
             self.clip_model = patch_clip(self.clip_model)
 
+            # 加载 Synchformer 模型
             self.synchformer = Synchformer()
             self.synchformer.load_state_dict(
                 torch.load(synchformer_ckpt, weights_only=True, map_location='cpu'))
 
-            self.tokenizer = open_clip.get_tokenizer('ViT-H-14-378-quickgelu')  # same as 'ViT-H-14'
+            # 初始化 tokenizer
+            # 与 'ViT-H-14' 相同
+            self.tokenizer = open_clip.get_tokenizer('ViT-H-14-378-quickgelu')
         else:
             self.clip_model = None
             self.synchformer = None
             self.tokenizer = None
 
         if tod_vae_ckpt is not None:
+            # 初始化 Mel 转换器和 AutoEncoder 模块
             self.mel_converter = get_mel_converter(mode)
             self.tod = AutoEncoderModule(vae_ckpt_path=tod_vae_ckpt,
                                          vocoder_ckpt_path=bigvgan_vocoder_ckpt,
@@ -71,6 +92,7 @@ class FeaturesUtils(nn.Module):
         else:
             self.tod = None
 
+    # 编译模型以提高推理速度
     def compile(self):
         if self.clip_model is not None:
             self.clip_model.encode_image = torch.compile(self.clip_model.encode_image)
@@ -80,6 +102,7 @@ class FeaturesUtils(nn.Module):
         self.decode = torch.compile(self.decode)
         self.vocode = torch.compile(self.vocode)
 
+    # 设置模型为评估模式
     def train(self, mode: bool) -> None:
         return super().train(False)
 
@@ -109,7 +132,7 @@ class FeaturesUtils(nn.Module):
         b, t, c, h, w = x.shape
         assert c == 3 and h == 224 and w == 224
 
-        # partition the video
+        # 将视频分段
         segment_size = 16
         step_size = 8
         num_segments = (t - segment_size) // step_size + 1
@@ -132,14 +155,14 @@ class FeaturesUtils(nn.Module):
     def encode_text(self, text: list[str]) -> torch.Tensor:
         assert self.clip_model is not None, 'CLIP is not loaded'
         assert self.tokenizer is not None, 'Tokenizer is not loaded'
-        # x: (B, L)
+        # 将文本编码为 token
         tokens = self.tokenizer(text).to(self.device)
         return self.clip_model.encode_text(tokens, normalize=True)
 
     @torch.inference_mode()
     def encode_audio(self, x) -> DiagonalGaussianDistribution:
         assert self.tod is not None, 'VAE is not loaded'
-        # x: (B * L)
+        # 将音频转换为 Mel 频谱
         mel = self.mel_converter(x)
         dist = self.tod.encode(mel)
 

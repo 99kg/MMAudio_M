@@ -454,13 +454,28 @@ Installing collected packages: huggingface-hub, tokenizers, transformers
       Successfully uninstalled huggingface-hub-1.0.0
 Successfully installed huggingface-hub-0.36.0 tokenizers-0.22.1 transformers-4.57.1
 
-PS C:\Users\18071\Desktop\MMAudio_M> mkdir C:\Users\18071\Desktop\MMAudio_M\weights\DFN5B-CLIP-ViT-H-14-384
-
-
-    目录: C:\Users\18071\Desktop\MMAudio_M\weights
-
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
-d-----        2025/10/28     17:11                DFN5B-CLIP-ViT-H-14-384
-
+(mmaudio_env) (base) PS C:\Users\18071\Desktop\MMAudio_M> python demo.py --duration=8 --video="C:/Users/18071/Desktop/video-sound-test/1.After removing the audio sound/1.mp4"  --prompt "The sound of footsteps as a person walks" --output="C:/Users/18071/Desktop/video-sound-test/2.After dubbing the audio/" --tag="20251029"
+[INFO    ]: Loaded weights from weights\mmaudio_large_44k_v2.pth
+[INFO    ]: Parsing model identifier. Schema: local-dir, Identifier: C:\Users\18071\Desktop\MMAudio_M\local_file\apple\DFN5B-CLIP-ViT-H-14-384
+[INFO    ]: Attempting to load config from local dir: C:\Users\18071\Desktop\MMAudio_M\local_file\apple\DFN5B-CLIP-ViT-H-14-384\open_clip_config.json
+[INFO    ]: Loaded model config and preprocess from: C:\Users\18071\Desktop\MMAudio_M\local_file\apple\DFN5B-CLIP-ViT-H-14-384\open_clip_config.json
+[INFO    ]: Found preferred checkpoint file: open_clip_pytorch_model.bin in C:\Users\18071\Desktop\MMAudio_M\local_file\apple\DFN5B-CLIP-ViT-H-14-384
+[INFO    ]: Found CLIP weights in local folder: C:\Users\18071\Desktop\MMAudio_M\local_file\apple\DFN5B-CLIP-ViT-H-14-384\open_clip_pytorch_model.bin
+[INFO    ]: Instantiating model architecture: CLIP
+[INFO    ]: Loading full pretrained weights from: C:\Users\18071\Desktop\MMAudio_M\local_file\apple\DFN5B-CLIP-ViT-H-14-384\open_clip_pytorch_model.bin
+[INFO    ]: Final image preprocessing configuration set: {'size': (378, 378), 'mode': 'RGB', 'mean': [0.48145466, 0.4578275, 0.40821073], 'std': [0.26862954, 0.26130258, 0.27577711], 'interpolation': 'bicubic', 'resize_mode': 'squash', 'fill_color': 0}
+[INFO    ]: Model local-dir:C:\Users\18071\Desktop\MMAudio_M\local_file\apple\DFN5B-CLIP-ViT-H-14-384 creation process complete.
+[INFO    ]: Loading MotionFormer config from C:\Users\18071\Desktop\MMAudio_M\mmaudio\ext\synchformer\divided_224_16x4.yaml
+[INFO    ]: Parsing tokenizer identifier. Schema: None, Identifier: ViT-H-14-378-quickgelu
+[INFO    ]: Attempting to load config from built-in: ViT-H-14-378-quickgelu
+[INFO    ]: Using default SimpleTokenizer.
+Loading config.json from local directory
+Loading weights from local directory
+Removing weight norm...
+[INFO    ]: Using video C:\Users\18071\Desktop\video-sound-test\1.After removing the audio sound\1.mp4
+[INFO    ]: Prompt: The sound of footsteps as a person walks
+[INFO    ]: Negative prompt:
+[INFO    ]: Audio saved to C:\Users\18071\Desktop\video-sound-test\2.After dubbing the audio\1_20251029.flac
+[INFO    ]: Video saved to C:\Users\18071\Desktop\video-sound-test\2.After dubbing the audio\1_20251029.mp4
+[INFO    ]: Memory usage: 5.87 GB
+(mmaudio_env) (base) PS C:\Users\18071\Desktop\MMAudio_M> 
