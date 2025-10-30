@@ -39,11 +39,11 @@ def main():
 
     parser.add_argument('--mask_away_clip', action='store_true')
 
-    parser.add_argument('--output', type=Path, help='Output directory', default='./output')
+    parser.add_argument('--output_path', type=Path, help='Output directory', default='./output')
+    parser.add_argument('--output_name', type=str, help='Output file name', default='')
     parser.add_argument('--seed', type=int, help='Random seed', default=42)
     parser.add_argument('--skip_video_composite', action='store_true')
     parser.add_argument('--full_precision', action='store_true')
-    parser.add_argument('--tag', type=str, help='Input tag', default='default_tag')
 
     args = parser.parse_args()
 
@@ -65,14 +65,14 @@ def main():
     # 提取其他参数
     prompt: str = args.prompt
     negative_prompt: str = args.negative_prompt
-    output_dir: str = args.output.expanduser()
+    output_dir: str = args.output_path.expanduser()
+    output_name: str = args.output_name
     seed: int = args.seed
     num_steps: int = args.num_steps
     duration: float = args.duration
     cfg_strength: float = args.cfg_strength
     skip_video_composite: bool = args.skip_video_composite
     mask_away_clip: bool = args.mask_away_clip
-    tag: str = args.tag
 
     # 确定使用的设备（CUDA、MPS 或 CPU）
     device = 'cpu'
@@ -145,16 +145,25 @@ def main():
 
     # 将生成的音频保存到输出目录
     if video_path is not None:
-        save_path = output_dir / f'{video_path.stem}_{tag}.flac'
+        if output_name:
+            save_path = output_dir / f'{output_name}.flac'
+        else:
+            save_path = output_dir / f'{video_path.stem}.flac'
     else:
-        safe_filename = prompt.replace(' ', '_').replace('/', '_').replace('.', '')
-        save_path = output_dir / f'{safe_filename}_{tag}.flac'
+        if output_name:
+            save_path = output_dir / f'{output_name}.flac'
+        else:
+            safe_filename = prompt.replace(' ', '_').replace('/', '_').replace('.', '')
+            save_path = output_dir / f'{safe_filename}.flac'
     torchaudio.save(save_path, audio, seq_cfg.sampling_rate)
     log.info(f'Audio saved to:{save_path}')
 
     # 如果提供了视频且未跳过合成步骤，则保存带音频的视频
     if video_path is not None and not skip_video_composite:
-        video_save_path = output_dir / f'{video_path.stem}_{tag}.mp4'
+        if output_name:
+            video_save_path = output_dir / f'{output_name}.mp4'
+        else:
+            video_save_path = output_dir / f'{video_path.stem}.mp4'
         make_video(video_info, video_save_path, audio, sampling_rate=seq_cfg.sampling_rate)
         log.info(f'Video saved to {output_dir / video_save_path}')
 
